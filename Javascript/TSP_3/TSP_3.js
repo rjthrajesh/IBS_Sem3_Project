@@ -1,5 +1,5 @@
 var cities = [];
-var totalCities = 15;
+var totalCities = 12;
 
 var population = [];
 var fitness = [];
@@ -7,12 +7,13 @@ var populationSize = 1000;
 
 var recordDistance = Infinity;
 var bestEver;
+var currentBest;
 var prevBestEver;
 var ctr = 0;
-var besEverSameFor = 1000;
+var besEverSameFor = 5000;
 
 function setup() {
-  createCanvas(400, 600);
+  createCanvas(800, 800);
   var order = [];
   for(let i=0; i<totalCities; i++){
     let v = createVector(random(width), random(height/2));
@@ -50,6 +51,24 @@ function draw() {
     vertex(cities[n].x, cities[n].y);
   }
   endShape();
+  
+  translate(0,height/2);
+  strokeWeight(3);
+  noFill();
+  for(let i=0; i<cities.length; i++){
+    ellipse(cities[i].x, cities[i].y, 10, 10);
+  }
+  stroke(255);
+  strokeWeight(2);
+  noFill();
+  beginShape();
+  for(let i=0; i<currentBest.length; i++){
+    let n = currentBest[i];
+    vertex(cities[n].x, cities[n].y);
+  }
+  endShape();
+  
+  
   
   if(prevBestEver != bestEver){
     prevBestEver = bestEver;
