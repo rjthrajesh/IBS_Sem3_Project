@@ -69,6 +69,24 @@ function mutate(order, mutationRate){
     if(random(1) < mutationRate){
       let indexA = floor(random(order.length));
       let indexB = (indexA + 1) % totalCities;
+      if(ctr > besEverSameFor-(floor(0.05*besEverSameFor))){
+        for(let kk = 0; kk<3; kk++){
+          let indexB = (indexA + 1) % totalCities;
+          swap(order, indexA, indexB);
+        }
+      }
+      if(ctr < besEverSameFor-(floor(0.05*besEverSameFor)) && ctr > besEverSameFor-(floor(0.10*besEverSameFor))){
+        for(let kk = 0; kk<2; kk++){
+          let indexB = (indexA + 1) % totalCities;
+          swap(order, indexA, indexB);
+        }
+      }
+      if(ctr < besEverSameFor-(floor(0.1*besEverSameFor)) && ctr > besEverSameFor-(floor(0.15*besEverSameFor))){
+        for(let kk = 0; kk<1; kk++){
+          let indexB = (indexA + 1) % totalCities;
+          swap(order, indexA, indexB);
+        }
+      }
       swap(order, indexA, indexB);
     }
   }

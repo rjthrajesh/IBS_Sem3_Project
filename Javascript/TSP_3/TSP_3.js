@@ -1,5 +1,5 @@
 var cities = [];
-var totalCities = 12;
+var totalCities = 20;
 
 var population = [];
 var fitness = [];
@@ -10,7 +10,7 @@ var bestEver;
 var currentBest;
 var prevBestEver;
 var ctr = 0;
-var besEverSameFor = 5000;
+var besEverSameFor = 10000;
 
 function setup() {
   createCanvas(800, 800);
@@ -20,28 +20,28 @@ function setup() {
     cities[i] = v;
     order[i] = i;
   }
-  
+
   for(let i=0; i<populationSize; i++){
     population[i] = shuffle(order);
   }
-  
+
 }
 
 
 function draw() {
   background(0);
-  
+
   calculateFitness();
   normalizeFitness();
   nextGeneration();
-  
+
   strokeWeight(3);
   noFill();
   for(let i=0; i<cities.length; i++){
     ellipse(cities[i].x, cities[i].y, 10, 10);
   }
-  
-  
+
+
   stroke(255);
   strokeWeight(2);
   noFill();
@@ -51,7 +51,7 @@ function draw() {
     vertex(cities[n].x, cities[n].y);
   }
   endShape();
-  
+
   translate(0,height/2);
   strokeWeight(3);
   noFill();
@@ -67,9 +67,9 @@ function draw() {
     vertex(cities[n].x, cities[n].y);
   }
   endShape();
-  
-  
-  
+
+
+
   if(prevBestEver != bestEver){
     prevBestEver = bestEver;
   }
@@ -97,17 +97,16 @@ function swap(a, i, j){
   a[i] = a[j];
   a[j] = temp;
 }
-
 // calculating the distance between 2 points
 function calcDistance(points, order){
   let sum = 0;
   for(let i=0; i<order.length-1; i++){
     let cityAIndex = order[i];
     let cityA = points[cityAIndex];
-    
+
     let cityBIndex = order[i+1];
     let cityB = points[cityBIndex];
-    
+
     let d = dist(cityA.x, cityA.y, cityB.x, cityB.y);
     sum += d;
   }
