@@ -10,7 +10,7 @@ var bestEver;
 var currentBest;
 var prevBestEver;
 var ctr = 0;
-var besEverSameFor = 10000;
+var besEverSameFor = 1000;
 
 function setup() {
   createCanvas(800, 800);

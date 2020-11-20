@@ -1,54 +1,90 @@
-var cities = [];
-var totalCities = 13; 
-
 var stringInp = "ATGCTTCGGGCAAGACTCAAAAATA";
+var k = 10;
+var stepLen = 4;
+var strOut;
+var newKmerDecomp = [];
+
 var distances = [];
-var kmerDivision;
-var k = 6;
+var kmerInp;
+var order = [];
+var ctr = 0;
+var iterVal = 10000;
+
+var populationSize = 1000;
+var fitness = [];
+var population = [];
+
+var recordDistance = Infinity;
+var bestEver;
+var bestEverSameFor = 10000;
+var prevBestEver = [];
+
 
 function setup() {
-  createCanvas(800, 800);
-  var order = [];
-  for(let i=0; i<totalCities; i++){
-    let v = createVector(random(width), random(height/2));
-    cities[i] = v;
+  kmerInp = divisionIntoKmers(stringInp);
+  
+  for(let i=0; i<kmerInp.length; i++){
+    distances.push([]);
+  }
+  
+  kmerInp.sort();
+  
+  for(let i=0; i<distances.length; i++){
+    for(let j=0; j<distances.length; j++){
+      str1 = kmerInp[i].substring(1,k);
+      str2 = kmerInp[j].substring(0,k-1);
+      distances[i][j] = hammingDist(str1, str2);
+    }
     order[i] = i;
   }
   
-  kmerDivision = divisionIntoKmers(stringInp);
-  
-  for(let i=0; i<kmerDivision.length; i++){
-    distances.push([]);
+  for(let i=0; i<populationSize; i++){
+    population[i] = shuffle(order);
   }
-  kmerDivision.sort();
-  for(let i=0; i<distances.length; i++){
-    for(let j=0; j<distances.length; j++){
-      str1 = kmerDivision[i].substring(1,k);
-      str2 = kmerDivision[j].substring(0,k-1);
-      distances[i][j] = hammingDist(str1, str2);
-    }
-  }
-  console.log(stringInp);
-  console.log(kmerDivision);
-  console.log(distances,k);
 }
 
 
 function draw() {
-  background(0);
-  strokeWeight(3);
-  noFill();
-  for(let i=0; i<cities.length; i++){
-    ellipse(cities[i].x, cities[i].y, 10, 10);
+
+  calculateFitness();
+  normalizeFitness();
+  nextGeneration();
+  console.log(1);
+
+  if(prevBestEver != bestEver){
+    console.log(prevBestEver);
+    console.log(calcDistance(prevBestEver));
+    prevBestEver = bestEver;
+    console.log(2);
+    console.log(prevBestEver);
+    console.log(calcDistance(prevBestEver));
+    console.log("\n");
   }
-  stroke(255);
-  strokeWeight(2);
-  noFill();
-  beginShape();
-  for(let i=0; i<cities.length; i++){
-    vertex(cities[i].x, cities[i].y);
+
+  if(prevBestEver == bestEver && ctr > bestEverSameFor){
+    console.log(bestEver);
+    console.log(floor(calcDistance(bestEver)/k));
+    console.log(calcDistance(bestEver));
+    for(let i=0; i<bestEver.length; i++){
+      newKmerDecomp.push(kmerInp[bestEver[i]]);
+    }
+    console.log(newKmerDecomp);
+    for(let i=0; i<newKmerDecomp.length; i++){
+      if(i ==0){
+        strOut = newKmerDecomp[i];
+      }
+      else{
+        abcs = newKmerDecomp[i].substring(k-stepLen,k);
+        strOut = strOut + abcs;
+      }
+    }
+    console.log(strOut);
+    console.log(hammingDist(strOut, stringInp));
+    noLoop();
   }
-  endShape();
+  else{
+    ctr++;
+  }
 }
 
 function swap(a, i, j){
@@ -69,23 +105,16 @@ function hammingDist(str1, str2){
 
 function divisionIntoKmers(str){
   let inp = [];
-  for(let i=0; i<=str.length-k; i++){
+  for(let i=0; i<=str.length-k; i+=stepLen){
     inp.push(str.substring(i,i+k));
   }
   return inp;
 }
 
-function calcDistance(points, order){
+function calcDistance(order){
   let sum = 0;
   for(let i=0; i<order.length-1; i++){
-    let cityAIndex = order[i];
-    let cityA = points[cityAIndex];
-
-    let cityBIndex = order[i+1];
-    let cityB = points[cityBIndex];
-
-    let d = dist(cityA.x, cityA.y, cityB.x, cityB.y);
-    sum += d;
+    sum += distances[order[i]][order[i+1]];
   }
   return sum;
 }
