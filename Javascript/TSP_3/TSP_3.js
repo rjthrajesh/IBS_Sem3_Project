@@ -1,5 +1,5 @@
 var cities = [];
-var totalCities = 25;
+var totalCities = 12;
 
 var population = [];
 var fitness = [];
@@ -10,9 +10,13 @@ var bestEver;
 var currentBest;
 var prevBestEver;
 var ctr = 0;
-var besEverSameFor = 1000;
+var besEverSameFor = 3000;
+
+var t0;
+var t1;
 
 function setup() {
+  t0 = performance.now();
   createCanvas(800, 800);
   var order = [];
   for(let i=0; i<totalCities; i++){
@@ -77,6 +81,8 @@ function draw() {
   if(prevBestEver == bestEver && ctr > besEverSameFor){
     console.log(bestEver);
     console.log("Finished");
+    t1 = performance.now();
+    console.log("Time taken = "+(t1-t0)/1000+" seconds");
     noLoop();
   }
   else{
