@@ -1,5 +1,5 @@
-var stringInp = "ATGCTTCGGGCAAGACTCAAAAATAGCAAAGGCAGC";
-//var stringInp = "CCAGATCTCTCGATCTTCTTACA";
+//var stringInp = "ATGCTTCGGGCAAGACTCAAAAATAGCAAAGGCAGC";
+var stringInp = "CCAGATCTCTCGATCTTCTTACA";
 var k = 12;
 var stepLen = 1;
 var strOut;
@@ -85,7 +85,7 @@ function draw() {
     console.log(strOut);
     console.log(hammingDist(strOut, stringInp));
     t1 = performance.now();
-    console.log("Time taken = "+(t1-t0)/1000+" milliseconds");
+    console.log("Time taken = "+(t1-t0)/1000+" seconds");
     noLoop();
   }
   else{
@@ -111,7 +111,7 @@ function draw() {
     console.log(strOut);
     console.log(hammingDist(strOut, stringInp));
     t1 = performance.now();
-    console.log("Time taken = "+(t1-t0)/1000+" milliseconds");
+    console.log("Time taken = "+(t1-t0)/1000+" seconds");
     noLoop();
   }
 }
