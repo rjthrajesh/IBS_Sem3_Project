@@ -30,7 +30,9 @@ function nextGeneration(){
   for(let i=0; i<population.length; i++){
     let orderA = pickOne(population, fitness);
     let orderB = pickOne(population, fitness);
+    //console.log(orderA,"\n", orderB);
     let order = crossOver(orderA, orderB);
+    //console.log(order,"\n");
     mutate(order, 0.01);
     newPopulation[i] = order;
   }
@@ -65,45 +67,156 @@ function crossOver(orderA, orderB){
 
 function mutate(order, mutationRate){
   for(let i=0; i<kmerInp.length; i++){
+    let f = 0;
     if(random(1) < mutationRate){
       if(ctr > bestEverSameFor-(floor(0.05*bestEverSameFor))){
-        for(let kk = 0; kk<5; kk++){
-          let indexA = floor(random(order.length));
-          let indexB = (indexA + 1) % kmerInp.length;
-          swap(order, indexA, indexB);
+        if(k>6){
+          for(let kk = 0; kk<k-2; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              console.log("11");
+              break;
+            }
+          }
+        }
+        else{
+          for(let kk = 0; kk<9; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              break;
+            }
+          }
         }
       }
       if(ctr < bestEverSameFor-(floor(0.05*bestEverSameFor)) && ctr > bestEverSameFor-(floor(0.1*bestEverSameFor))){
-        for(let kk = 0; kk<4; kk++){
-          let indexA = floor(random(order.length));
-          let indexB = (indexA + 1) % kmerInp.length;
-          swap(order, indexA, indexB);
+        if(k>6){
+          for(let kk = 0; kk<k-3; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              console.log("11");
+              break;
+            }
+          }
+        }
+        else{
+          for(let kk = 0; kk<8; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              break;
+            }
+          }
         }
       }
       if(ctr < bestEverSameFor-(floor(0.1*bestEverSameFor)) && ctr > bestEverSameFor-(floor(0.15*bestEverSameFor))){
-        for(let kk = 0; kk<3; kk++){
-          let indexA = floor(random(order.length));
-          let indexB = (indexA + 1) % kmerInp.length;
-          swap(order, indexA, indexB);
+        if(k>6){
+          for(let kk = 0; kk<k-4; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              console.log("11");
+              break;
+            }
+          }
+        }
+        else{
+          for(let kk = 0; kk<7; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              break;
+            }
+          }
         }
       }
       if(ctr < bestEverSameFor-(floor(0.15*bestEverSameFor)) && ctr > bestEverSameFor-(floor(0.2*bestEverSameFor))){
-        for(let kk = 0; kk<2; kk++){
-          let indexA = floor(random(order.length));
-          let indexB = (indexA + 1) % kmerInp.length;
-          swap(order, indexA, indexB);
+        if(k>6){
+          for(let kk = 0; kk<k-5; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              console.log("11");
+              break;
+            }
+          }
+        }
+        else{
+          for(let kk = 0; kk<6; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              break;
+            }
+          }
         }
       }
       if(ctr < bestEverSameFor-(floor(0.2*bestEverSameFor)) && ctr > bestEverSameFor-(floor(0.25*bestEverSameFor))){
-        for(let kk = 0; kk<1; kk++){
-          let indexA = floor(random(order.length));
-          let indexB = (indexA + 1) % kmerInp.length;
-          swap(order, indexA, indexB);
+        if(k>7){
+          for(let kk = 0; kk<k-6; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              console.log("11");
+              break;
+            }
+          }
+        }
+        else{
+          for(let kk = 0; kk<5; kk++){
+            let indexA = floor(random(order.length));
+            let indexB = (indexA + 1) % kmerInp.length;
+            swap(order, indexA, indexB);
+            let d = calcDistance(order);
+            if(d < recordDistance){
+              f = 1;
+              break;
+            }
+          }
         }
       }
-      let indexA = floor(random(order.length));
-      let indexB = (indexA + 1) % kmerInp.length;
-      swap(order, indexA, indexB);
+      else{
+        let indexA = floor(random(order.length));
+        let indexB = (indexA + 1) % kmerInp.length;
+        swap(order, indexA, indexB);
+        let d = calcDistance(order);
+        if(d < recordDistance){
+          f = 1;
+          break;
+        }
+      }
+      if(f ==1){
+        return;
+      }
     }
   }
 }

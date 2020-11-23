@@ -1,6 +1,7 @@
-var stringInp = "ATGCTTCGGGCAAGACTCAAAAATA";
-var k = 10;
-var stepLen = 4;
+var stringInp = "ATGCTTCGGGCAAGACTCAAAAATAGCAAAGGCAGC";
+//var stringInp = "CCAGATCTCTCGATCTTCTTACA";
+var k = 12;
+var stepLen = 1;
 var strOut;
 var newKmerDecomp = [];
 
@@ -8,7 +9,6 @@ var distances = [];
 var kmerInp;
 var order = [];
 var ctr = 0;
-var iterVal = 10000;
 
 var populationSize = 1000;
 var fitness = [];
@@ -19,8 +19,12 @@ var bestEver;
 var bestEverSameFor = 10000;
 var prevBestEver = [];
 
+var t0;
+var t1;
+
 
 function setup() {
+  t0 = performance.now();
   kmerInp = divisionIntoKmers(stringInp);
   
   for(let i=0; i<kmerInp.length; i++){
@@ -55,10 +59,10 @@ function draw() {
     console.log(prevBestEver);
     console.log(calcDistance(prevBestEver));
     prevBestEver = bestEver;
-    console.log(2);
     console.log(prevBestEver);
     console.log(calcDistance(prevBestEver));
     console.log("\n");
+    ctr = 0;
   }
 
   if(prevBestEver == bestEver && ctr > bestEverSameFor){
@@ -80,10 +84,35 @@ function draw() {
     }
     console.log(strOut);
     console.log(hammingDist(strOut, stringInp));
+    t1 = performance.now();
+    console.log("Time taken = "+(t1-t0)/1000+" milliseconds");
     noLoop();
   }
   else{
     ctr++;
+  }
+  if(calcDistance(bestEver) == 0){
+    console.log(bestEver);
+    console.log(floor(calcDistance(bestEver)/k));
+    console.log(calcDistance(bestEver));
+    for(let i=0; i<bestEver.length; i++){
+      newKmerDecomp.push(kmerInp[bestEver[i]]);
+    }
+    console.log(newKmerDecomp);
+    for(let i=0; i<newKmerDecomp.length; i++){
+      if(i ==0){
+        strOut = newKmerDecomp[i];
+      }
+      else{
+        abcs = newKmerDecomp[i].substring(k-stepLen,k);
+        strOut = strOut + abcs;
+      }
+    }
+    console.log(strOut);
+    console.log(hammingDist(strOut, stringInp));
+    t1 = performance.now();
+    console.log("Time taken = "+(t1-t0)/1000+" milliseconds");
+    noLoop();
   }
 }
 
