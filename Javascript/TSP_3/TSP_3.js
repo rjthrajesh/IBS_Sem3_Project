@@ -1,5 +1,5 @@
 var cities = [];
-var totalCities = 20;
+var totalCities = 25;
 
 var population = [];
 var fitness = [];
